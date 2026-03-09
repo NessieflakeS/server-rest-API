@@ -25,11 +25,15 @@ router.get('/:id', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
+  console.log('POST /users вызван, тело:', req.body);
   try {
     const user = new User(req.body);
+    console.log('Попытка сохранить пользователя...');
     await user.save();
+    console.log('Пользователь сохранён, отправляю ответ');
     res.status(201).json(user);
   } catch (err) {
+    console.error('Ошибка при сохранении:', err);
     next(err);
   }
 });
